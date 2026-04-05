@@ -14,7 +14,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/record", userRecordRoutes);
 app.use("/api/user", userManagementRoutes);
 
-app.get("/", (req, res) => {
+app.get("/work", (req, res) => {
   res.status(200).json({
     success: true,
     message: "Server is working",
