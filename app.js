@@ -18,7 +18,7 @@ app.use("/api/users", userManagementRoutes);
 app.use("/api/admins", adminRoutes);
 app.use("/api/dashboard", dashBoardRoutes);
 
-app.get("/work", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
     message: "Server is working",
