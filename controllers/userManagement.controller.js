@@ -236,7 +236,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const toggleStatus = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -279,5 +279,5 @@ module.exports = {
   getUsers,
   getUserById,
   updateUser,
-  deleteUser,
+  toggleStatus,
 };

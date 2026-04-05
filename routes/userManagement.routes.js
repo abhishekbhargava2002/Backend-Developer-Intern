@@ -7,13 +7,13 @@ const {
   getUsers,
   getUserById,
   updateUser,
-  deleteUser,
+  toggleStatus,
 } = require("../controllers/userManagement.controller");
 
 router.post("/", authenticate, authorize("Admin"), createUser);
 router.get("/", authenticate, authorize("Admin"), getUsers);
 router.get("/:id", authenticate, authorize("Admin"), getUserById);
-router.put("/:id", authenticate, authorize("Admin"), updateUser);
-router.delete("/:id", authenticate, authorize("Admin"), deleteUser);
+router.patch("/:id", authenticate, authorize("Admin"), updateUser);
+router.patch("/:id/status", authenticate, authorize("Admin"), toggleStatus);
 
 module.exports = router;

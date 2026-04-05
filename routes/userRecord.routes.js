@@ -12,15 +12,15 @@ const {
 
 router.post("/", authenticate, authorize("Admin"), createFinancial);
 
-//View Admin, Viewer, Analyst
+//View Admin, Analyst
 router.get(
   "/",
   authenticate,
-  authorize("Admin", "Viewer", "Analyst"),
+  authorize("Admin","Analyst"),
   getFinancials,
 );
 router.get("/:id", authenticate, authorize("Admin"), getFinancialById);
-router.put("/:id", authenticate, authorize("Admin"), updateFinancial);
+router.patch("/:id", authenticate, authorize("Admin"), updateFinancial);
 router.delete("/:id", authenticate, authorize("Admin"), deleteFinancial);
 
 module.exports = router;
