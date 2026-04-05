@@ -198,7 +198,7 @@ Flow:
 
 ---
 
-## 🧠 How to Handle Models & Controllers (Best Practices)
+## 🧠 How to Handle Models & Controllers
 
 ### 1. Keep Controllers Clean
 
@@ -271,7 +271,7 @@ Prevents invalid data entry.
 
 ---
 
-### 5. Pagination (Important for Interviews)
+### 5. Pagination 
 
 ```js
 const skip = (page - 1) * limit;
@@ -306,7 +306,7 @@ try {
 
 ---
 
-### 7. Security Best Practices
+### 7. Security 
 
 * Hash passwords (bcrypt)
 * Never return password in API
@@ -355,7 +355,7 @@ DELETE /api/records/:id
 ## ⚙️ Environment Variables
 
 ```
-PORT=3000
+PORT=5000
 MONGO_URI=your_mongodb_url
 JWT_SECRET=your_secret_key
 ```
@@ -368,16 +368,3 @@ JWT_SECRET=your_secret_key
 npm install
 npm run dev
 ```
-
----
-
-## 💡 Interview Tips (Based on Your Project)
-
-Be ready to explain:
-
-* JWT flow
-* Middleware working
-* Role-based authorization
-* Pagination logic
-* Mongoose schema design
-* Error handling strategy
