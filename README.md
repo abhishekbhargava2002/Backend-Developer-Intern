@@ -1,4 +1,4 @@
-# 📘 Finance Management System API
+# 📘 Finance Management System
 
 ## 🚀 Project Overview
 
@@ -268,7 +268,3 @@ GET /api/dashboard/category-type
   "totalPages": 10
 }
 ```
-
-
-* JWT-based authentication
-* Role-basoject is licensed under the MIT License.
