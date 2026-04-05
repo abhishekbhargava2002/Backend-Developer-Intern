@@ -12,11 +12,11 @@ const {
 
 router.post("/", authenticate, authorize("Admin"), createFinancial);
 
-//View Admin, Viewer, Analyst
+//View Admin, Analyst
 router.get(
   "/",
   authenticate,
-  authorize("Admin", "Viewer", "Analyst"),
+  authorize("Admin","Analyst"),
   getFinancials,
 );
 router.get("/:id", authenticate, authorize("Admin"), getFinancialById);

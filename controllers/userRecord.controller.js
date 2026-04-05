@@ -13,7 +13,7 @@ const createFinancial = async (req, res) => {
     }
 
     const financial = await Financial.create({
-      userId: req.user.id,
+      adminId: req.user.id,
       amount,
       type,
       category,
@@ -60,7 +60,7 @@ const getFinancials = async (req, res) => {
       .sort({ createdAt: -1 });
 
     const cleanedRecords = financialRecords.filter(
-      (item) => item.userId !== null,
+      (item) => item.adminId !== null,
     );
 
     const total = await Financial.countDocuments(filter);
@@ -118,7 +118,7 @@ const updateFinancial = async (req, res) => {
 
     const record = await Financial.findOne({
       _id: id,
-      userId: req.user.id,
+      adminId: req.user.id,
       isDeleted: false,
     });
 
@@ -158,7 +158,7 @@ const deleteFinancial = async (req, res) => {
     const { id } = req.params;
     const record = await Financial.findOneAndDelete({
       _id: id,
-      userId: req.user.id,
+      adminId: req.user.id,
       isDeleted: false,
     });
 

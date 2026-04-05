@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const financialSchema = new mongoose.Schema(
   {
-    userId: {
+    adminId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Admin",
       required: true,
     },
     amount: {
