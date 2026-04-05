@@ -1,20 +1,21 @@
-# 📘 Finance Management System
+# 📘 Finance Management System API
 
 ## 🚀 Project Overview
 
-This project is a **Finance Management Backend API** built using:
+This is a **Finance Management Backend API** built using:
 
 * Node.js
 * Express.js
 * MongoDB (Mongoose)
 * JWT Authentication
 
-It supports:
+It provides a complete system for:
 
-* Admin authentication
-* User management (Viewer, Analyst)
-* Financial record management (Income/Expense)
-* Role-based authorization
+* 🔐 Admin Authentication
+* 👥 User Management (Viewer, Analyst)
+* 💰 Financial Record Management (Income/Expense)
+* 🛡️ Role-Based Authorization
+* 📊 Dashboard Analytics
 
 ---
 
@@ -30,7 +31,8 @@ project/
 │   ├── admin.controller.js
 │   ├── userAuth.controller.js
 │   ├── userManagement.controller.js
-│   └── userRecord.controller.js
+│   ├── userRecord.controller.js
+│   └── dashBoard.controller.js
 │
 ├── middleware/
 │   └── authMiddleware.js
@@ -44,10 +46,37 @@ project/
 │   ├── admin.routes.js
 │   ├── user.routes.js
 │   ├── userManagement.routes.js
-│   └── userRecord.routes.js
+│   ├── userRecord.routes.js
+│   └── dashboard.routes.js
 │
 ├── app.js
 └── .env
+```
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/your-username/finance-management-api.git
+cd finance-management-api
+npm install
+```
+
+---
+
+## ▶️ Run the Project
+
+```bash
+npm run dev
+```
+
+---
+
+## 🌐 Base URL
+
+```
+http://localhost:5000/api
 ```
 
 ---
@@ -57,47 +86,46 @@ project/
 ### JWT Flow
 
 1. User/Admin logs in
-2. Server generates token
-3. Token sent in headers:
+2. Server generates JWT token
+3. Client sends token in headers:
 
 ```
 Authorization: Bearer <token>
 ```
 
-4. Middleware verifies token
+4. Middleware verifies token & role
+
+---
 
 ### Middleware
 
-* `authenticate` → verifies JWT
-* `authorize("Admin")` → role-based access
+* `authenticate` → Verifies JWT
+* `authorize("Admin")` → Role-based access control
 
 ---
 
-## 👤 Models Explanation
+## 👤 Models
 
-### 1. Admin Model
+### Admin Model
 
-```js
+```
 name, email, password, isActive
 ```
 
-* Only Admin can:
-
-  * Create users
-  * Manage financial records
+* Admin has full system control
 
 ---
 
-### 2. User Model
+### User Model
 
-```js
+```
 name, email, password, role, status
 ```
 
 Roles:
 
-* `Viewer` → Read-only access
-* `Analyst` → Can view financial data
+* Viewer → Read-only
+* Analyst → View financial data
 
 Status:
 
@@ -105,9 +133,9 @@ Status:
 
 ---
 
-### 3. Financial Model
+### Financial Model
 
-```js
+```
 adminId, amount, type, category, date, notes, isDeleted
 ```
 
@@ -118,219 +146,71 @@ Enums:
 
 ---
 
-## 🎯 Controllers (Core Logic)
+## 🎯 Controllers
 
-### 1. Admin Controller
-
-Handles:
+### Admin Controller
 
 * Register Admin
 * Login Admin
-
-Important Concepts:
-
 * Password hashing using bcrypt
+* JWT token generation
+
+---
+
+### User Auth Controller
+
+* User Login
+* Password comparison
 * Token generation
 
 ---
 
-### 2. User Auth Controller
+### User Management Controller
 
-Handles:
-
-* User Login
-
-Flow:
-
-* Check email
-* Compare password
-* Generate token
+* Create User (Admin only)
+* Get Users (Pagination + Filter)
+* Update User
+* Toggle User Status
 
 ---
 
-### 3. User Management Controller
+### Financial Controller
 
-#### createUser
-
-* Admin creates Viewer/Analyst
-* Validates email
-* Hashes password
-
-#### getUsers
-
-* Pagination
-* Filter by status
-* Only fetch Viewer role
-
-#### updateUser
-
-* Update name/email/password
-* Email uniqueness check
-
-#### toggleStatus
-
-* Deactivate user
+* Create Financial Record
+* Get Financial Records (Pagination + Filters)
+* Update Financial Record
+* Delete Financial Record
 
 ---
 
-### 4. Financial Controller
+### Dashboard Controller
 
-#### createFinancial
-
-* Only Admin can create
-* Linked with adminId
-
-#### getFinancials
-
-* Pagination
-* Filters:
-
-  * type
-  * category
-
-#### updateFinancial
-
-* Only owner Admin can update
-
-#### deleteFinancial
-
-* Deletes record (currently hard delete)
-
----
-
-## 🧠 How to Handle Models & Controllers
-
-### 1. Keep Controllers Clean
-
-Controllers should:
-
-* Validate request
-* Call model
-* Send response
-
-❌ Bad:
-
-```js
-// Too much logic inside controller
-```
-
-✅ Good:
-
-```js
-// Minimal logic + readable
-```
-
----
-
-### 2. Use Mongoose Models Properly
-
-#### Create
-
-```js
-await Model.create(data)
-```
-
-#### Read
-
-```js
-await Model.find(filter)
-```
-
-#### Update
-
-```js
-await Model.findByIdAndUpdate(id, data, { new: true })
-```
-
-#### Delete
-
-```js
-await Model.findByIdAndDelete(id)
-```
-
----
-
-### 3. Always Validate Input
-
-* Required fields
-* Email format
-* Password length
-* ObjectId validation
-
----
-
-### 4. Use Enums for Data Integrity
-
-Example:
-
-```js
-enum: ["Income", "Expense"]
-```
-
-Prevents invalid data entry.
-
----
-
-### 5. Pagination 
-
-```js
-const skip = (page - 1) * limit;
-```
-
-Response:
-
-```json
-pagination: {
-  total,
-  page,
-  limit,
-  totalPages
-}
-```
-
----
-
-### 6. Error Handling
-
-Always use:
-
-```js
-try {
-} catch (error) {
-  res.status(500).json({
-    success: false,
-    message: error.message
-  });
-}
-```
-
----
-
-### 7. Security 
-
-* Hash passwords (bcrypt)
-* Never return password in API
-* Use JWT
-* Role-based access
+* Total Income & Expense
+* Net Balance
+* Category-wise Summary
 
 ---
 
 ## 🔗 API Endpoints
 
-### Admin
+### 🧑‍💼 Admin
 
 ```
-POST /api/admins/register
-POST /api/admins/login
+POST /api/admin/register
+POST /api/admin/login
 ```
 
-### User Auth
+---
+
+### 🔑 User Authentication
 
 ```
 POST /api/auth/login
 ```
 
-### User Management (Admin only)
+---
+
+### 👥 User Management (Admin Only)
 
 ```
 POST   /api/users
@@ -340,31 +220,55 @@ PATCH  /api/users/:id
 PATCH  /api/users/:id/status
 ```
 
-### Financial Records
+---
+
+### 💰 Financial Records
 
 ```
-POST   /api/records
-GET    /api/records
-GET    /api/records/:id
-PATCH  /api/records/:id
-DELETE /api/records/:id
+POST   /api/financial
+GET    /api/financial
+GET    /api/financial/:id
+PATCH  /api/financial/:id
+DELETE /api/financial/:id
 ```
 
 ---
 
-## ⚙️ Environment Variables
+### 📊 Dashboard
 
 ```
-PORT=5000
-MONGO_URI=your_mongodb_url
-JWT_SECRET=your_secret_key
+GET /api/dashboard/summary
+GET /api/dashboard/category-type
 ```
 
 ---
 
-## ▶️ Run Project
+## 📄 Sample Request
 
-```bash
-npm install
-npm run dev
+### Create Financial Record
+
+```json
+{
+  "amount": 1000,
+  "type": "Expense",
+  "category": "Food",
+  "notes": "Dinner"
+}
 ```
+
+---
+
+## 📦 Pagination Format
+
+```json
+{
+  "total": 100,
+  "page": 1,
+  "limit": 10,
+  "totalPages": 10
+}
+```
+
+
+* JWT-based authentication
+* Role-basoject is licensed under the MIT License.
