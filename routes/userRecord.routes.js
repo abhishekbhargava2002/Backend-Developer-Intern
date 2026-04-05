@@ -20,7 +20,7 @@ router.get(
   getFinancials,
 );
 router.get("/:id", authenticate, authorize("Admin"), getFinancialById);
-router.put("/:id", authenticate, authorize("Admin"), updateFinancial);
+router.patch("/:id", authenticate, authorize("Admin"), updateFinancial);
 router.delete("/:id", authenticate, authorize("Admin"), deleteFinancial);
 
 module.exports = router;

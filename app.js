@@ -11,8 +11,8 @@ connectDB();
 app.use(express.json());
 
 app.use("/api/auth", userRoutes);
-app.use("/api/record", userRecordRoutes);
-app.use("/api/user", userManagementRoutes);
+app.use("/api/records", userRecordRoutes);
+app.use("/api/users", userManagementRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
