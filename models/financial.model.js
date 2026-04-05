@@ -1,37 +1,41 @@
 const mongoose = require("mongoose");
 
-const financialSchema = new mongoose.Schema({
+const financialSchema = new mongoose.Schema(
+  {
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     amount: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     type: {
-        type: String,
-        enum: ["Income", "Expense"],
-        required: true,
+      type: String,
+      enum: ["Income", "Expense"],
+      required: true,
     },
     category: {
-        type: String,
-        required: true,
+      type: String,
+      enum: ["Food", "Shopping", "Transport", "Entertainment"],
+      required: true,
     },
     date: {
-        type: Date,
-        default: Date.now,
+      type: Date,
+      default: Date.now,
     },
     notes: {
-        type: String,
+      type: String,
     },
     isDeleted: {
-        type: Boolean,
-        default: false,
-    }
-}, {
-    timestamps: true
-});
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 module.exports = mongoose.model("Financial", financialSchema);

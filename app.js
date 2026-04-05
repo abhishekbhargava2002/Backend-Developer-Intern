@@ -6,13 +6,16 @@ const PORT = process.env.PORT || 3000;
 const userRoutes = require("./routes/user.routes");
 const userRecordRoutes = require("./routes/userRecord.routes");
 const userManagementRoutes = require("./routes/userManagement.routes");
+const adminRoutes = require("./routes/admin.routes"); 
+
 
 connectDB();
 app.use(express.json());
 
 app.use("/api/auth", userRoutes);
-app.use("/api/record", userRecordRoutes);
-app.use("/api/user", userManagementRoutes);
+app.use("/api/records", userRecordRoutes);
+app.use("/api/users", userManagementRoutes);
+app.use("/api/admins", adminRoutes);
 
 app.get("/work", (req, res) => {
   res.status(200).json({
