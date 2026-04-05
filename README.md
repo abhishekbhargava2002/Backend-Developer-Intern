@@ -1,4 +1,4 @@
-# 📘 Finance Management Backend (Node.js + Express + MongoDB)
+# 📘 Finance Management System
 
 ## 🚀 Project Overview
 
